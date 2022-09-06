@@ -1,6 +1,6 @@
 /*
 *------------------------------------------
-* Laboratorio 4.cpp
+* Laboratorio 4 parte01.cpp
 * -----------------------------------------
 * UNIVERSIDAD DEL VALLE DE GUATEMALA
 * FACULTAD DE INGENIERÍA
@@ -9,9 +9,10 @@
 * Fabian Juárez 21440
 *------------------------------------------
 * Descripción: 
-* 
-* 
-* 
+* &Cafe nos contrata para realizar un programa que ayude a verificar si la tienda es rentable. 
+* Se nos proporciona un reporte de ventas del mes de julio y agosto de las 8 unidades unidadesVendidas
+* y para cada uno tenemos su precio de venta y el costo fijo por unidad.
+* Debemos calcular el monto de ventas por producto y la utilidad al igual que la de cada mes.
 * 
 *------------------------------------------
 */ 
@@ -45,7 +46,7 @@ struct hilo{
   pthread_t Threadn;
 };
 
-// Funcion para el thread el cual se encarga de encontrar la venta total del productoy  utilidad  
+// Funcion para el thread el cual se encarga de encontrar la venta total del producto y  utilidad  
 // al final sumarlos y tener la utilidad del mes junto con sumarlo al total completo
 void *process(void *ptr){
     hilo *soloHilo;
@@ -96,24 +97,24 @@ int main()
     printf("------------------------------------------\n");
     printf("Repote del mes de Agosto\n");
     printf("Ventas por Producto\n");
-     for (int i = 0; i < 8; i++){
-        hilon[i].name = names[i];
-        hilon[i].precio = precioUnit[i];
-        hilon[i].costo = costoFijoUnidad[i];
-        hilon[i].unidadesVenta = unidadesVendidasAgosto[i];
-        hilon[i].pos = i;
-        pthread_create(&hilon[i].Threadn,NULL, process, (void*) &hilon[i]);
+     for (int i = 8; i < 16; i++){
+        hilon[i-8].name = names[i-8];
+        hilon[i-8].precio = precioUnit[i-8];
+        hilon[i-8].costo = costoFijoUnidad[i-8];
+        hilon[i-8].unidadesVenta = unidadesVendidasAgosto[i-8];
+        hilon[i-8].pos = i-8;
+        pthread_create(&hilon[i-8].Threadn,NULL, process, (void*) &hilon[i-8]);
     }
-    for(int i = 0; i < 8;i++){
-        pthread_join(hilon[i].Threadn, NULL);
+    for(int i = 8; i < 16;i++){
+        pthread_join(hilon[i-8].Threadn, NULL);
      }
      
-    for(int i = 0; i < 8;i++){
-        cout << hilon[i].name << ": Q "<<hilon[i].ventasProducto << endl;
+    for(int i = 8; i < 16;i++){
+        cout << hilon[i-8].name << ": Q "<<hilon[i-8].ventasProducto << endl;
     }
     printf("\n\nUtilidad por Producto \n");
-     for(int i = 0; i < 8;i++){
-        cout << hilon[i].name << ": Q "<<hilon[i].utilidadProdUnit << endl;
+     for(int i = 8; i < 16;i++){
+        cout << hilon[i-8].name << ": Q "<<hilon[i-8].utilidadProdUnit << endl;
      }
              utilidadMes = utilidadMes - costosVariablesAgosto;
      cout << "\nTotal Ventas: Q" << totalVentas << endl;
